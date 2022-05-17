@@ -1,9 +1,10 @@
 <?php
 require_once './db/Conexao.php';
+require_once 'Carro.php';
 
-function listarDados($filtro, $order, $valor) {
+function listarCarros($filtro, $order, $valor) {
     try {
-        return Conexao::getInstance()->query(montaSql($filtro, $order, $valor));
+        return montaCarros(Conexao::getInstance()->query(montaSql($filtro, $order, $valor)));
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
@@ -25,10 +26,11 @@ function adicionaFiltro($sql, $filtro, $order, $valor) {
     }
 }
 
-function calculaMediaKmAno($km, $anoFabricacao) {
-
-}
-
-function calculaRevendaDesconto($km, $anoFabricacao) {
-
+function montaCarros($consulta) {
+    $carros = [];
+    while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+        $carro = new Carro($linha['id'], $linha['nome'], $linha['valor'], $linha['km'], $linha['dataFabricacao']);
+        $carros[] = $carro;
+    }
+    return $carros;
 }

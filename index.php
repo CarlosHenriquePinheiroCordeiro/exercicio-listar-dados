@@ -43,19 +43,9 @@
                 <th>Revenda c/ Desconto</th>
             </tr>
             <?php
-                require_once 'php/dados.php';
-                $consulta = listarDados($filtro, $order, $valor);
-                while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<tr>';
-                    echo    '<td>'.$consulta['ID'].'</td>';
-                    echo    '<td>'.$consulta['NOME'].'</td>';
-                    echo    '<td>'.$consulta['VALOR'].'</td>';
-                    echo    '<td>'.$consulta['KM'].'</td>';
-                    echo    '<td>'.$consulta['DATAFABRICACAO'].'</td>';
-                    //echo    '<td>'..'</td>';
-                    //echo    '<td>'..'</td>';
-                    //echo    '<td>'..'</td>';
-                    echo '</tr>';
+                require_once 'classes/Carro/dados.php';
+                foreach (listarCarros($filtro, $order, $valor) as $carro) {
+                    echo $carro->toTable();
                 }
             ?>
         </table>

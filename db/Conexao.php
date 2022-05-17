@@ -1,18 +1,19 @@
 <?php
 
-abstract class Conexao {
+class Conexao {
 
-    protected $Pdo;
+    private static $Pdo;
+
+    private function __construct() {
+    }
 
     public static function getInstance() {
-        if (!isset($this->Pdo)) {
-            $this->Pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '');
-            $this->Pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        if (!isset(self::$Pdo)) {
+            self::$Pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+            self::$Pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-        return $Pdo;
+        return self::$Pdo;
     }
 
 
 }
-
-?>
