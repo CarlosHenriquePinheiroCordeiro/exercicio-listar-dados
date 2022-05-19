@@ -29,7 +29,7 @@ function adicionaFiltro($sql, $filtro, $order, $valor) {
 function montaCarros($consulta) {
     $carros = [];
     while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
-        $carro = new Carro($linha['id'], $linha['nome'], $linha['valor'], $linha['km'], $linha['dataFabricacao']);
+        $carro = new Carro($linha['ID'], $linha['NOME'], $linha['VALOR'], $linha['KM'], $linha['DATAFABRICACAO']);
         $carros[] = $carro;
     }
     return $carros;

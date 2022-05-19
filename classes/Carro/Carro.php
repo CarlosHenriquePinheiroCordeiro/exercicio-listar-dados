@@ -57,7 +57,7 @@ class Carro {
     }
 
     public function getDataFabricacao() {
-        return $this->DataFabricacao;
+        return $this->dataFabricacao;
     }
 
     public function setDataFabricacao($dataFabricacao) {
@@ -66,28 +66,34 @@ class Carro {
         }
     }
 
+    public function getAnosUso()  {
+        return intval(date("Y")) - intval(date("Y", strtotime($this->getDataFabricacao())));
+    }
+
     public function getMediaKmAno() {
-        return 'teste';
+        return ceil($this->getKm()/$this->getAnosUso());
     }
 
     public function getRevendaDesconto() {
-        return 'teste';
+        $retorno = 'R$'.$this->getValor();
+        if ($this->getKm() > 100000 || $this->getAnosUso() > 10) {
+            $retorno = '<span style="color:red">R$'.$this->getValor() - ($this->getValor() * 0.1).'</span>';
+        }
+        return $retorno;
     }
 
     public function toTable() {
         return  '<tr>'
-                .   '<td>'.$this->getId().'</td>'
-                .   '<td>'.$this->getNome().'</td>'
-                .   '<td>'.$this->getValor().'</td>'
-                .   '<td>'.$this->getKm().'</td>'
-                .   '<td>'.$this->getDataFabricacao().'</td>'
-                .   '<td>'.$this->getMediaKmAno().'</td>'
-                .   '<td>'.$this->getRevendaDesconto().'</td>'
+                .   '<td>'  .$this->getId()             .'</td>'
+                .   '<td>'  .$this->getNome()           .'</td>'
+                .   '<td>R$'.$this->getValor()          .'</td>'
+                .   '<td>'  .$this->getKm()             .'</td>'
+                .   '<td>'  .$this->getDataFabricacao() .'</td>'
+                .   '<td>'  .$this->getAnosUso()        .'</td>'
+                .   '<td>'  .$this->getMediaKmAno()     .'</td>'
+                .   '<td>'  .$this->getRevendaDesconto().'</td>'
                 .'</tr>';
     }
 
-    /**
-     *  echo 
-     */
 
 }
