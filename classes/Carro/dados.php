@@ -14,16 +14,19 @@ function listarCarros($filtro, $order, $valor) {
 function montaSql($filtro, $order, $valor) {
     $sql = 'SELECT * '
         .    'FROM CARRO ';
-    adicionaFiltro($sql, $filtro, $order, $valor);
+    $sql = adicionaFiltro($sql, $filtro, $order, $valor);
     return $sql;
 }
 
 function adicionaFiltro($sql, $filtro, $order, $valor) {
-    if ($filtro && $order && $valor) {
+    if ($filtro && $valor) {
         $sql .= 'WHERE '.$filtro
-            .   ' LIKE %'.$valor.'%'
-            .  ' ORDER BY '.$filtro.' '.$order.' ';
+            .   ' LIKE \'%'.$valor.'%\'';
     }
+    if ($filtro && $order) {
+        $sql .= ' ORDER BY '.$filtro.' '.$order.' ';
+    }
+    return $sql;
 }
 
 function montaCarros($consulta) {
